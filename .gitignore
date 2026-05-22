@@ -1,0 +1,6 @@
+build/
+*.o
+*.out
+*.exe
+.todo_list.json
+.todo_list.json.bak
