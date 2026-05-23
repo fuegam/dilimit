@@ -8,8 +8,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(dilimit
     core/main.cpp
     core/usage_tracker.cpp
+    core/cooldown_tracker.cpp
     storage/limit_storage.cpp
     providers/fake_provider/fake_provider.cpp
+
 )
 
 target_include_directories(dilimit PRIVATE

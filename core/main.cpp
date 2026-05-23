@@ -1,6 +1,7 @@
 #include "../storage/limit_storage.h"
 #include "../providers/fake_provider/fake_provider.h"
 #include "usage_tracker.h"
+#include "cooldown_tracker.h"
 
 #include <iostream>
 #include <chrono>
@@ -11,19 +12,40 @@ int main()
     FakeProvider provider;
     UsageTracker tracker;
     LimitStorage limits_storage;
+    CooldownTracker cooldown_tracker;
 
     while(1)
     {
+        std::vector<std::string> unblocked_apps = cooldown_tracker.countDown();
+        if(!unblocked_apps.empty())
+        {
+            for(const auto& item : unblocked_apps)
+            {
+                std::cout << "Cooldown ended for: " << item << '\n';
+            }
+        }
+        
         ActiveWindow activeWindow = provider.getActiveWindow();
-        tracker.addSecond(activeWindow);
+        std::string curr_window_id = activeWindow.window_id;
 
-        int time_used = tracker.getTimeUsed(activeWindow.window_id);
-        int limits = limits_storage.getLimitSeconds(activeWindow.window_id);
+        if(!cooldown_tracker.isBlocked(curr_window_id))
+            tracker.addSecond(activeWindow);
 
-        std::cout << activeWindow.window_id << " time used: " << time_used << ' ' << limits << '\n'; // debug
+        int time_used = tracker.getTimeUsed(curr_window_id);
+        int limits = limits_storage.getLimitSeconds(curr_window_id);
 
-        if(limits > 0 && time_used > limits) 
-            std::cout << "Time exceeded for" << activeWindow.window_title << "\n";
+        std::cout << curr_window_id << " time used: " << time_used << ' ' << limits << '\n'; // debug
+
+        if(!cooldown_tracker.isBlocked(curr_window_id) && limits > 0 && time_used >= limits)
+        {
+            int limit_cooldown_time = limits_storage.getLimitCooldown(curr_window_id);
+
+            std::cout << "Time exceeded for: " << activeWindow.window_title << "\n";
+            std::cout << "Cooldown time: " << limit_cooldown_time << '\n';
+
+            cooldown_tracker.blockApp(curr_window_id, limit_cooldown_time);
+            tracker.resetUsedTime(curr_window_id);
+        }
         
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }

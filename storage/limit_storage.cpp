@@ -2,15 +2,20 @@
 
 LimitStorage::LimitStorage() : 
     limits{
-        {"firefox", 30},
-        {"spotify", 20},
-        {"org.kde.konsole", 10},
-        {"org.telegram.desktop", 8}
+        {"firefox", {30, 10}},
+        {"spotify", {20, 10}},
+        {"org.kde.konsole", {20, 10}},
+        {"org.telegram.desktop", {20, 10}}
     }
 {
 }
 
 int LimitStorage::getLimitSeconds(const std::string& window)
 {
-    return limits[window];
+    return limits[window].limit_seconds;
+}
+
+int LimitStorage::getLimitCooldown(const std::string& window)
+{
+    return limits[window].limit_cooldown;
 }
