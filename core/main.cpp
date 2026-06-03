@@ -1,5 +1,7 @@
-#include "../storage/limit_storage.h"
 #include "../providers/fake_provider/fake_provider.h"
+#include "../providers/activity_provider.h"
+
+#include "../storage/limit_storage.h"
 #include "usage_tracker.h"
 #include "cooldown_tracker.h"
 
@@ -9,7 +11,9 @@
 
 int main()
 {
-    FakeProvider provider;
+    FakeProvider fake_provider;
+    ActivityProvider& provider = fake_provider; 
+
     UsageTracker tracker;
     LimitStorage limits_storage;
     CooldownTracker cooldown_tracker;

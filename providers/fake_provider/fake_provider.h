@@ -5,12 +5,13 @@
 #include <random>
 
 #include "../../core/active_window.h"
+#include "../activity_provider.h"
 
-class FakeProvider
+class FakeProvider : public ActivityProvider
 {
     public:
         FakeProvider();
-        ActiveWindow getActiveWindow();
+        ActiveWindow getActiveWindow() override;
     private:
         std::vector<ActiveWindow> apps_data;
         ActiveWindow current_window;
