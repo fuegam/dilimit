@@ -5,8 +5,10 @@ project(dilimit)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(dilimit
+add_executable(
+    dilimit
     core/main.cpp
+    core/dilimit_app.cpp
     core/usage_tracker.cpp
     core/cooldown_tracker.cpp
     storage/limit_storage.cpp
