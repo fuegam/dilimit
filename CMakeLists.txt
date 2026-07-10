@@ -5,15 +5,22 @@ project(dilimit)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(
-    dilimit
+include(FetchContent)
+FetchContent_Declare(
+    json
+    GIT_REPOSITORY https://github.com/nlohmann/json.git
+    GIT_TAG v3.12.0
+)
+FetchContent_MakeAvailable(json)
+
+add_executable(dilimit
     core/main.cpp
     core/dilimit_app.cpp
     core/usage_tracker.cpp
     core/cooldown_tracker.cpp
     storage/limit_storage.cpp
     providers/fake_provider/fake_provider.cpp
-
+    providers/niri_provider/niri_provider.cpp
 )
 
 target_include_directories(dilimit PRIVATE
@@ -21,3 +28,5 @@ target_include_directories(dilimit PRIVATE
     storage
     providers/fake_provider
 )
+
+target_link_libraries(dilimit PRIVATE nlohmann_json::nlohmann_json)
