@@ -39,9 +39,12 @@ void DilimitApp::tick()
         std::cout << "Time exceeded for: " << activeWindow.window_title << "\n";
         std::cout << "Cooldown time: " << limit_cooldown_time << '\n';
 
-        blocker_.blockActiveWindow(curr_window_id);
         cooldown_tracker_.blockApp(curr_window_id, limit_cooldown_time);
         tracker_.resetUsedTime(curr_window_id);
+    }
+    if(cooldown_tracker_.isBlocked(curr_window_id))
+    {
+        blocker_.blockActiveWindow(curr_window_id);
     }
 }
 
