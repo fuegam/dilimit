@@ -4,7 +4,8 @@
 #include <chrono>
 #include <thread>
 
-DilimitApp::DilimitApp(ActivityProvider& provider, LimitStorage& limits_storage) :
+DilimitApp::DilimitApp(WindowBlocker& blocker, ActivityProvider& provider, LimitStorage& limits_storage) :
+    blocker_(blocker),
     provider_(provider),
     limits_storage_(limits_storage)
 {}
@@ -38,6 +39,7 @@ void DilimitApp::tick()
         std::cout << "Time exceeded for: " << activeWindow.window_title << "\n";
         std::cout << "Cooldown time: " << limit_cooldown_time << '\n';
 
+        blocker_.blockActiveWindow(curr_window_id);
         cooldown_tracker_.blockApp(curr_window_id, limit_cooldown_time);
         tracker_.resetUsedTime(curr_window_id);
     }

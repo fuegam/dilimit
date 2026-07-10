@@ -19,6 +19,7 @@ add_executable(dilimit
     core/usage_tracker.cpp
     core/cooldown_tracker.cpp
     storage/limit_storage.cpp
+    blockers/fake_blocker/fake_blocker.cpp
     providers/fake_provider/fake_provider.cpp
     providers/niri_provider/niri_provider.cpp
 )
