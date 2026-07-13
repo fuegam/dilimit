@@ -21,13 +21,17 @@ add_executable(dilimit
     storage/limit_storage.cpp
     blockers/fake_blocker/fake_blocker.cpp
     providers/fake_provider/fake_provider.cpp
+    blockers/niri_blocker/niri_blocker.cpp
     providers/niri_provider/niri_provider.cpp
 )
+
+target_compile_options(dilimit PRIVATE -Wall -Wextra)
 
 target_include_directories(dilimit PRIVATE
     core
     storage
-    providers/fake_provider
+    providers
+    blockers
 )
 
 target_link_libraries(dilimit PRIVATE nlohmann_json::nlohmann_json)
