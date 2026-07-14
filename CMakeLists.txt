@@ -23,6 +23,7 @@ add_executable(dilimit
     providers/fake_provider/fake_provider.cpp
     blockers/niri_blocker/niri_blocker.cpp
     providers/niri_provider/niri_provider.cpp
+    notifiers/niri_notifier/niri_notifier.cpp
 )
 
 target_compile_options(dilimit PRIVATE -Wall -Wextra)
@@ -32,6 +33,7 @@ target_include_directories(dilimit PRIVATE
     storage
     providers
     blockers
+    notifiers
 )
 
 target_link_libraries(dilimit PRIVATE nlohmann_json::nlohmann_json)

@@ -4,7 +4,8 @@
 #include <chrono>
 #include <thread>
 
-DilimitApp::DilimitApp(WindowBlocker& blocker, ActivityProvider& provider, LimitStorage& limits_storage) :
+DilimitApp::DilimitApp(Notifier& notifier, WindowBlocker& blocker, ActivityProvider& provider, LimitStorage& limits_storage) :
+    notifier_(notifier),
     blocker_(blocker),
     provider_(provider),
     limits_storage_(limits_storage)
@@ -41,6 +42,7 @@ void DilimitApp::tick()
 
         cooldown_tracker_.blockApp(curr_window_id, limit_cooldown_time);
         tracker_.resetUsedTime(curr_window_id);
+        notifier_.blockNotifier(curr_window_id);
     }
     if(cooldown_tracker_.isBlocked(curr_window_id))
     {

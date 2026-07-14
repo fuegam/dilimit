@@ -4,6 +4,7 @@
 #include "../blockers/niri_blocker/niri_blocker.h"
 #include "../providers/fake_provider/fake_provider.h"
 #include "../providers/niri_provider/niri_provider.h"
+#include "../notifiers/niri_notifier/niri_notifier.h"
 #include "../providers/activity_provider.h"
 
 #include <iostream>
@@ -12,10 +13,11 @@
 
 int main()
 {
+    NiriNotifier notifier;
     NiriBlocker blocker;
     NiriProvider provider;
     LimitStorage limits;
-    DilimitApp dilimit_app(blocker, provider, limits);
+    DilimitApp dilimit_app(notifier, blocker, provider, limits);
 
     dilimit_app.run();
 

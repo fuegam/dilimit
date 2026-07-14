@@ -3,6 +3,7 @@
 #include "../providers/activity_provider.h"
 #include "../blockers/window_blocker.h"
 #include "../storage/limit_storage.h"
+#include "../notifiers/notifier.h"
 
 #include "usage_tracker.h"
 #include "cooldown_tracker.h"
@@ -10,9 +11,10 @@
 class DilimitApp
 {
 public:
-    DilimitApp(WindowBlocker& blocker, ActivityProvider& provider, LimitStorage& limits_storage);
+    DilimitApp(Notifier& notifier, WindowBlocker& blocker, ActivityProvider& provider, LimitStorage& limits_storage);
     void run();
 private:
+    Notifier& notifier_;
     WindowBlocker& blocker_;
     ActivityProvider& provider_;
     LimitStorage& limits_storage_;
