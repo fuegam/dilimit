@@ -5,7 +5,8 @@ LimitStorage::LimitStorage() :
         {"firefox", {30, 10}},
         {"spotify", {20, 10}},
         {"org.kde.konsole", {20, 10}},
-        {"org.telegram.desktop", {20, 10}}
+        {"org.telegram.desktop", {20, 10}},
+        {"thunar", {10, 10}}
     }
 {
 }

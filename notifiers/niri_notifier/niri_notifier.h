@@ -7,5 +7,7 @@
 class NiriNotifier : public Notifier
 {
 public:
-    void blockNotifier(const std::string& window_title) override;
+    void blockNotifier(const std::string& window_id) override;
+private:
+    std::string capitalizeFirst(const std::string& s);
 };
